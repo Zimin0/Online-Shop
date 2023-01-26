@@ -1,4 +1,4 @@
-{% extends 'basic.html %}
+{% extends "basic.html" %}
 
 
 {%  block title %}
@@ -10,8 +10,9 @@
 {% endblock %}
 
 {% block content %}
-<form action="{" method="post">
+<form method="post">
     {% csrf_token %}
     {{ form }}
+    <button type="submit" value="добавить">Добавить</button>
 </form>
 {% endblock %}

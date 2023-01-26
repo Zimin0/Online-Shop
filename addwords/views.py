@@ -19,5 +19,6 @@ def main(request):
 
 def new_word(request):
 	form = WordForm()
-	return HttpResponse("<h1>HELLO NEW WORD! </h1>")
-	#return render(request, 'addwords/index.html', )
+	#return HttpResponse("<h1>HELLO NEW WORD! </h1>")
+	context = {} 
+	return render(request, 'addwords/add.html', context)
