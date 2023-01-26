@@ -1,7 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Word
 from .forms import WordForm
-from django.http import HttpResponse
 
 def main(request):
 	words = Word.objects.all()
@@ -18,7 +17,12 @@ def main(request):
 	return render(request=request, template_name="addwords/main.html", context=context)
 
 def new_word(request):
-	form = WordForm()
-	#return HttpResponse("<h1>HELLO NEW WORD! </h1>")
-	context = {} 
-	return render(request, 'addwords/add.html', context)
+	if request.method == 'POST':
+		form = WordForm(request.POST)
+		if form.is_valid():
+			word = form.save(commit=False)
+			word.save()
+			return redirect('main')
+	else:
+		form = WordForm()
+	return render(request, 'addwords/add.html', {'form': form})
