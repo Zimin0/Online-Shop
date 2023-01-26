@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <title>{% block title %}Главная{% endblock %}- Словарь</title>
+    </head>
+    <body>
+        <header>
+            <h1>{% block page_title %}Главная{% endblock %}</h1>
+            <hr>
+        </header>
+        <nav>
+            <a href="{% url 'main' %}">Главная</a>
+            <a href="{% url 'new' %}">Добавить слово</a>
+            <a href="/admin/">Админ панель</a>
+        </nav>
+        {% block content %}
+
+        {% endblock %}
+    </body>
+</html>

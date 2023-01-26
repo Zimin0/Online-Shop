@@ -1,0 +1,17 @@
+{% extends 'basic.html %}
+
+
+{%  block title %}
+Главная - Добавить слово
+{% endblock %}
+
+{%  block page_title %}
+Главная - Добавить слово
+{% endblock %}
+
+{% block content %}
+<form action="{" method="post">
+    {% csrf_token %}
+    {{ form }}
+</form>
+{% endblock %}

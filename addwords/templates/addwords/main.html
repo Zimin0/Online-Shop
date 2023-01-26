@@ -1,0 +1,21 @@
+{% extends "basic.html" %}
+
+{%  block title %}
+Главная - Словарь
+{% endblock %}
+
+{%  block page_title %}
+Главная - Словарь
+{% endblock %}
+
+
+{% block content %}
+    <h1>Все слова:</h1>
+    {% for word in words %}
+        <h2>{{ word.word }} - {{ word.translation }}</h2>
+        <p>{{ word.type }}</p>
+        <p></p>
+        <p></p>
+    {% endfor %}
+
+{% endblock %}
