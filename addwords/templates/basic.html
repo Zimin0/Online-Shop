@@ -1,8 +1,10 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
         <title>{% block title %}Главная{% endblock %}- Словарь</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'addwords/style.css' %}">
     </head>
     <body>
         <header>
@@ -14,8 +16,9 @@
             <a href="{% url 'new' %}">Добавить слово</a>
             <a href="/admin/">Админ панель</a>
         </nav>
-        {% block content %}
-
-        {% endblock %}
+        <section>
+            {% block content %}
+            {% endblock %}
+        </section>
     </body>
 </html>
