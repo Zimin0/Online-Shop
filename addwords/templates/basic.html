@@ -8,13 +8,24 @@
     </head>
     <body>
         <header>
-            <h1>{% block page_title %}Главная{% endblock %}</h1>
+            <h1>{% block page_title %}{% endblock %}</h1>
             <hr>
         </header>
         <nav>
             <a href="{% url 'main' %}">Главная</a>
             <a href="{% url 'new' %}">Добавить слово</a>
             <a href="/admin/">Админ панель</a>
+            <hr>
+            
+            <p1>Здравствуйте, </p1>
+            <a><b>{{ user.username|default:'Guest' }}</b></a>
+            <hr>
+            {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'signup' %}">Sign up</a>
+            {% endif %}
         </nav>
         <section>
             {% block content %}

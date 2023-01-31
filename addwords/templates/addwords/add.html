@@ -2,17 +2,20 @@
 
 
 {%  block title %}
-Главная - Добавить слово
+Добавить слово
 {% endblock %}
 
 {%  block page_title %}
-Главная - Добавить слово
+Добавить слово
 {% endblock %}
 
 {% block content %}
+{% if user.is_authenticated %}
+
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit" value="добавить">Добавить</button>
 </form>
+{% endif %}
 {% endblock %}

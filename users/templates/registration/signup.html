@@ -1,0 +1,18 @@
+{% extends "basic.html" %}
+
+{%  block title %}
+Регистрация
+{% endblock %}
+
+{%  block page_title %}
+Регистрация
+{% endblock %}
+
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value="Register">
+    </form>
+{% endblock %}
