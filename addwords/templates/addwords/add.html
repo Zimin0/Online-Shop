@@ -11,11 +11,12 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit" value="добавить">Добавить</button>
 </form>
+{% else %}
+<p3>Мы не знаем, кто Вы...<br> Войдите в свой аккаунт или зарегестрируйтесь!</p3>
 {% endif %}
 {% endblock %}

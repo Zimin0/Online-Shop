@@ -14,8 +14,6 @@
     {% for word in words %}
         <h2>{{ word.word }} - {{ word.translation }}</h2>
         <p>{{ word.type }}</p>
-        <p></p>
-        <p></p>
+        <p>{{ word.get_synonyms }}</p>
     {% endfor %}
-
 {% endblock %}

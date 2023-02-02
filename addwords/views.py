@@ -5,7 +5,10 @@ from .forms import WordForm
 def main(request):
 	words = Word.objects.all()
 	for w in words:
-		
+		#w.synonyms.set(list(*[sy for sy in w.synonyms.all()]))
+		#print(*[i for i in w.synonyms.all()])
+		#print(w.synonyms)
+		#print(w.synonyms)
 		if w.type == "n":
 			w.type = 'Noun'
 		if w.type == "a":

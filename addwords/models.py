@@ -13,9 +13,13 @@ class Word(models.Model):
     type = models.CharField(max_length=1, choices=TYPE, blank=True)
     translation = models.CharField(max_length=25, verbose_name="Перевод")
     discription = models.TextField(blank=True, verbose_name="Доп. комментарий к переводу")
+    synonyms = models.ManyToManyField("Word", verbose_name="Синонимы", related_name='+')
 
     def __str__(self):
         return self.word
+    
+    def get_synonyms(self):
+        return [s.__str__() for s in self.synonyms.all()]
 
 
 class Language(models.Model):
