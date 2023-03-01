@@ -13,7 +13,7 @@ SECRET_KEY = 'django-insecure-9$k1j42j!=2q_7na!huz)$bxr=cs9a9zfbpo=_!=01&2ft#ho0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 ###################################################################################
 #from django.forms.renderers import TemplatesSetting

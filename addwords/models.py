@@ -4,9 +4,9 @@ from django.db import models
 class Word(models.Model):
     TYPE = (
         (None, "Выберите тип слова"),
-        ('v', 'Verb (сущ.)' ),
-        ('n', 'Noun (глаг.)'),
-        ('a', 'Adjective (прил.)'),
+        ('Verb', 'Verb (сущ.)' ),
+        ('Noun', 'Noun (глаг.)'),
+        ('Adjective', 'Adjective (прил.)'),
     )
     word = models.CharField(max_length=20, null=True, blank=False, verbose_name="Слово")
     language = models.ForeignKey("Language", on_delete=models.PROTECT, verbose_name="Язык")

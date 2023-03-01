@@ -16,6 +16,11 @@ section p3 {
     border-style: solid;
     border-width: 3px;
     border-radius: 10px;
+    padding: 30px;
+}   
+
+section p5 {
+    font-size: 15px;
 }   
 
 

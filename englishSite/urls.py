@@ -4,7 +4,7 @@ from django.views.generic import TemplateView
 
 
 urlpatterns = [
-    path('dictionary/', include('addwords.urls')),
+    path('', include('addwords.urls')),
     path('admin/', admin.site.urls),
     #####################_for_auth_#######################
     path('accounts/', include('django.contrib.auth.urls')) ,
