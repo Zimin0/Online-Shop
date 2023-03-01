@@ -10,16 +10,6 @@ def main(request):
 	else:
 		words = Word.objects.all()[:AMOUNT_OF_WORDS]
 
-	for w in words: # поменять !!!!!!!!!!!!!1
-		if w.type == "n":
-			w.type = 'Noun'
-		if w.type == "a":
-			w.type = "Adjective"
-		if w.type == "v":
-			w.type = "Verb"
-
-
-	
 	context = {"words":words}
 	return render(request=request, template_name="addwords/main.html", context=context)
 
