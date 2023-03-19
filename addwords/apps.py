@@ -4,4 +4,4 @@ from django.apps import AppConfig
 class AddwordsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'addwords'
-    verbose_name = "Словарь английских слов"
+    verbose_name = "Словарь английских слов" # Будет выводиться в админке
