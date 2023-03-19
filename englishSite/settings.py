@@ -38,8 +38,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'addwords.apps.AddwordsConfig',
     'users.apps.UsersConfig', # можно просто users
+    'debug_toolbar',
 ]
 
+
+INTERNAL_IPS = [
+    # ...
+    "127.0.0.1",
+    # ...
+]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
