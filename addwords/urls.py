@@ -5,5 +5,5 @@ from .views import main, new_word, ex_word
 urlpatterns = [
     path('', main, name='main'),
     path('new/', new_word, name='new' ),
-    path('<int:word_id>/', ex_word), # параметризированный маршрут 
+    path('<int:word_id>/', ex_word, name='ex_word'), # параметризированный маршрут 
 ]

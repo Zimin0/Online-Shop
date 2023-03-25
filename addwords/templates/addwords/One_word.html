@@ -1,0 +1,23 @@
+{% extends "basic.html" %}
+
+{%  block title %}
+Словарь
+{% endblock %}
+
+{%  block page_title %}
+{{ word.word }}
+{% endblock %}
+
+
+{% block content %}
+<p> <b>Перевод:</b> {{ word.translation }} </p>
+<hr>
+<p> <b>Синонимы:</b> {{ word.synonyms }} </p>
+<hr>
+<p> <b>Язык:</b> {{ word.language }} </p>
+<hr>
+<p> <b>Тип:</b> {{ word.type }} </p>
+<hr>
+<p> <b>Пояснение-пример:</b> {{ word.discription }} </p>
+<hr>
+{% endblock %}

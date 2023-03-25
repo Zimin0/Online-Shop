@@ -29,7 +29,7 @@
     {% endif %}
     <hr>
     {% for word in words %}
-        <h2>{{ word.word }} </h2> (<p5>{{ word.type }}</p5>) - <p2>{{ word.translation }} <br></2>
+        <h2> <a href="{% url 'ex_word' word.pk %}"> {{ word.word }} </a> </h2> (<p5>{{ word.type }}</p5>) - <p2>{{ word.translation }} <br></2>
         {% if word.get_synonyms.count > 0 %}
         <p5>Синонимы: </p5>
         {% endif %}

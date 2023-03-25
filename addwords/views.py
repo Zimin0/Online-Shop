@@ -11,7 +11,7 @@ def main(request):
 		words = Word.objects.all()[:AMOUNT_OF_WORDS]
 
 	context = {"words":words}
-	return render(request=request, template_name="addwords/main.html", context=context)
+	return render(request, "addwords/main.html", context)
 
 def new_word(request):
 	if request.method == 'POST':
@@ -26,6 +26,5 @@ def new_word(request):
 
 def ex_word(request, word_id):
 	word = Word.objects.get(pk=word_id)
-	context = {}
-	
-	return HttpResponse(f">{word}< ")
+	context = {'word': word}
+	return render(request, 'addwords/One_word.html', context)

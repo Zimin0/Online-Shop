@@ -11,7 +11,7 @@ class Word(models.Model):
         ordering = ['word', 'type'] # параметры сортировки записей по умолчанию
 
     TYPE = (
-        (None, "Выберите тип слова"), # заменяет --------- на Выберите тип слова
+        (None, "Выберите тип слова"), # или None -  заменяет --------- на Выберите тип слова
         ('Verb', 'Verb (сущ.)' ),
         ('Noun', 'Noun (глаг.)'),
         ('Adjective', 'Adjective (прил.)'),
@@ -24,6 +24,7 @@ class Word(models.Model):
     translation = models.CharField(max_length=25, verbose_name="Перевод")
     discription = models.TextField(blank=True, verbose_name="Доп. комментарий к переводу")
     synonyms = models.ManyToManyField("Word", verbose_name="Синонимы", related_name='+', blank=True)
+    
 
     def __str__(self):
         return self.word
@@ -44,15 +45,15 @@ class Language(models.Model):
 
     class Meta:
         verbose_name = "Язык"
-        verbose_name = "Языки"
+        verbose_name_plural = "Языки"
 
     name =  models.CharField(max_length=30, null=True, blank=False, verbose_name="Язык")
-    
+
     def __str__(self):
         return self.name
     
     def save(self, *args, **kwargs):
-        print("Запись language сохранена!")
+        print("Запись language сохранена!") # заменить на log
         super().save(*args, **kwargs)
     
     
