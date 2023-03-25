@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from .models import Word
 from .forms import WordForm
 
@@ -24,3 +24,8 @@ def new_word(request):
 		form = WordForm()
 	return render(request, 'addwords/add.html', {'form': form})
 
+def ex_word(request, word_id):
+	word = Word.objects.get(pk=word_id)
+	context = {}
+	
+	return HttpResponse(f">{word}< ")
