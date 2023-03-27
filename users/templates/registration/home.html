@@ -1,22 +1,27 @@
 {% extends "basic.html" %}
 
-
 {%  block title %}
-Добавить слово
+Словарь
 {% endblock %}
 
 {%  block page_title %}
-Добавить слово
+{% if user.is_authenticated %}
+    <h1> Личный кабинет - {{ user }}</h1> 
+{% else %}
+    <h1> Вы, кажется, тут в первый раз...</h1> 
+{% endif %}
 {% endblock %}
+
+
 
 {% block content %}
 {% if user.is_authenticated %}
-<form method="post">
-    {% csrf_token %}
-    {{ form.non_field_errors }}
-    {{ form.as_p }}
-    <button type="submit" value="добавить">Добавить</button>
-</form>
+    <h2>Ваши слова:</h2>
+    <hr>
+    {% for word in author_words %}
+        <h3> <a href="{% url 'ex_word' word.pk %}">{{ word }}</a> </h3>
+        <hr>
+    {% endfor %}
 {% else %}
 <p3>Мы не знаем, кто Вы...<br> <a href="{% url 'login' %}">Войдите</a> в свой аккаунт или <a href="{% url 'signup' %}">зарегестрируйтесь</a>!</p3>
 {% endif %}

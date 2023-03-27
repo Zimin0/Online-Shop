@@ -4,10 +4,20 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import CreateView
+from addwords.models import Word
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def home(request):
-    return render(request, "users/home.html")
+    context = {'user':request.user}
+    
+    author_words = Word.objects.filter(author=request.user.pk)
+    context['author_words'] = author_words
+
+    return render(request, "registration/home.html", context)
+
+# class Home(CreateView):
+#     template_name = "registration/home.html"
 
 class SignUp(CreateView):
     form_class = UserCreationForm
