@@ -24,6 +24,9 @@ class Word(models.Model):
     translation = models.CharField(max_length=25, verbose_name="Перевод")
     discription = models.TextField(blank=True, verbose_name="Доп. комментарий к переводу")
     synonyms = models.ManyToManyField("Word", verbose_name="Синонимы", related_name='+', blank=True)
+    rate = models.IntegerField(verbose_name="Рейтинг", default=5, help_text="Личный рейтинг слова от 1 до 10")
+    add_date = models.DateTimeField(verbose_name="Дата создания", auto_now_add=True, blank=True)
+    archived = models.BooleanField(verbose_name="Архивировано", help_text="Будет ли слово отображаться в словаре?", default=False)
     
 
     def __str__(self):

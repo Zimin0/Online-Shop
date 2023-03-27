@@ -6,9 +6,9 @@ def main(request):
 	AMOUNT_OF_WORDS = 6
 	if request.GET.get('selecter', False) not in ("None", False):
 		sort_name = str(request.GET.get('selecter', False))
-		words = Word.objects.order_by(sort_name)[:AMOUNT_OF_WORDS]
+		words = Word.objects.filter(archived=False).order_by(sort_name)[:AMOUNT_OF_WORDS] # 
 	else:
-		words = Word.objects.all()[:AMOUNT_OF_WORDS]
+		words = Word.objects.filter(archived=False)[:AMOUNT_OF_WORDS]
 
 	context = {"words":words}
 	return render(request, "addwords/main.html", context)

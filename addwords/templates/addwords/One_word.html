@@ -12,12 +12,38 @@
 {% block content %}
 <p> <b>Перевод:</b> {{ word.translation }} </p>
 <hr>
-<p> <b>Синонимы:</b> {{ word.synonyms }} </p>
+
+<!------------Если ли синонимы----------------->
+{% if word.synonyms.count == 0 %}
+<p> <b>Синонимы:</b> Нет </p>
 <hr>
+{% else %}
+<p> <b>Синонимы:</b> 
+    {% for sy in word.synonyms.all  %}
+        <a href="{% url 'ex_word' sy.pk  %}">{{ sy }}</a>,
+    {% endfor %}
+    </p>
+<hr>
+{% endif %}
+<!--------------------------------------------->
 <p> <b>Язык:</b> {{ word.language }} </p>
 <hr>
 <p> <b>Тип:</b> {{ word.type }} </p>
 <hr>
 <p> <b>Пояснение-пример:</b> {{ word.discription }} </p>
 <hr>
+<p> <b>Рейтинг:</b> {{ word.rate }} </p>
+<hr>
+<p> <b>Дата добавления:</b> {{ word.add_date }} </p>
+<hr>
+
+<!------------Архивировано слово или нет----------------->
+{% if word.archived %}
+<p> <b>Архивировано:</b> Да </p>
+<hr>
+{% else %}
+<p> <b>Архивировано:</b> Нет </p>
+<hr>
+{% endif %}
+<!------------------------------------------------------->
 {% endblock %}
