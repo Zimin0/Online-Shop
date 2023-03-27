@@ -3,7 +3,8 @@ from .models import Language, Word
 
 
 class WordAdmin(admin.ModelAdmin):
-    list_display = ('word', 'type', 'translation', 'language', 'rate', 'add_date', 'archived')
+    list_display = ('word', 'type', 'translation', 'language', 'rate', 'add_date', 'author', 'archived')
+    list_filter = ('archived', 'add_date')
     
 
 

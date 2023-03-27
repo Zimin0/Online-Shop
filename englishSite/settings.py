@@ -24,7 +24,7 @@ ALLOWED_HOSTS = ["*"]
 #FORM_RENDERER = "englishSite.settings.CustomFormRenderer"
 
 
-
+LOGIN_URL = 'login'
 # Пользователи будут перенаправлены на главную страницу после входа в систему и выхода из нее 
 LOGIN_REDIRECT_URL = 'main'
 LOGOUT_REDIRECT_URL = 'main'
