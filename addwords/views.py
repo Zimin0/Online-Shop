@@ -35,6 +35,10 @@ def ex_word(request, word_id):
 	return render(request, 'addwords/One_word.html', context)
 
 
+def info(request):
+	context = {}
+	return render(request, 'addwords/information.html', context)
+
 '''
 
 
