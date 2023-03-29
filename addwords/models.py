@@ -72,11 +72,11 @@ class Exchange(models.Model):
         ('AC', 'Accepted')
     )
 
-    from_user = models.OneToOneField(User, on_delete=models.DO_NOTHING, verbose_name="От пользователя", related_name='exchanges_from') 
-    to_user = models.OneToOneField(User, on_delete=models.DO_NOTHING, verbose_name="Пользователю", related_name='exchanges_to')
-    word = models.OneToOneField(Word, on_delete=models.DO_NOTHING, verbose_name="Слово", related_name='exchanges_in') 
+    from_user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="От пользователя", related_name='exchanges_from') 
+    to_user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Пользователю", related_name='exchanges_to')
+    word = models.ForeignKey(Word, on_delete=models.CASCADE, verbose_name="Слово", related_name='exchanges_in') 
     date =  models.DateTimeField(verbose_name="Дата создания", auto_now_add=True)
-    status = models.CharField(max_length=15, choices=STATUS)
+    status = models.CharField(max_length=15, choices=STATUS, default='IN')
 
     
 

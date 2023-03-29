@@ -5,6 +5,11 @@ from .forms import WordForm
 from django.contrib.auth.models import User
 
 
+
+# Еще одна причина перейти на GET, это то, что GET не должен
+# использоваться с методами, которые меняют состояние сервера, 
+# а только для read-only операций.
+
 def main(request):
 	AMOUNT_OF_WORDS = 15
 	if request.GET.get('selecter', False) not in ("None", False):
@@ -12,8 +17,7 @@ def main(request):
 		words = Word.objects.filter(archived=False).order_by(sort_name)[:AMOUNT_OF_WORDS] # 
 	else:
 		words = Word.objects.filter(archived=False)[:AMOUNT_OF_WORDS]
-
-		context = {"words":words}
+	context = {"words":words}
 
 	return render(request, "addwords/main.html", context)
 
@@ -35,9 +39,7 @@ def new_word(request):
 def ex_word(request, word_id):
 	word = Word.objects.get(pk=word_id)
 	context = {'word': word}
-	# print('---------------------------')
 	# print(User.objects.first().user_words.all())
-	# print('---------------------------')
 	return render(request, 'addwords/One_word.html', context)
 
 
@@ -47,12 +49,8 @@ def info(request):
 
 def users_list(request):
 	context = {}
-	####### Получение пользователя, который владеет данным словом #######
 	users = User.objects.all()
 	context['users'] = users	
-	# print()
-	#User.objects.first().user_words.all()
-	#####################################################################
 	return render(request, "addwords/users.html", context)
 '''
 
