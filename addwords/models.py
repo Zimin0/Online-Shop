@@ -58,7 +58,26 @@ class Language(models.Model):
     def save(self, *args, **kwargs):
         print("Запись language сохранена!") # заменить на log
         super().save(*args, **kwargs)
-    
+
+
+class Exchange(models.Model):
+    class Meta:
+        verbose_name = "Обмен словами"
+        verbose_name_plural = "Обмены словами"
+        ordering = ['date',]
+
+    STATUS = (
+        ('IN', 'In progress'),
+        ('RE', 'Rejected'),
+        ('AC', 'Accepted')
+    )
+
+    from_user = models.OneToOneField(User, on_delete=models.DO_NOTHING, verbose_name="От пользователя", related_name='exchanges_from') 
+    to_user = models.OneToOneField(User, on_delete=models.DO_NOTHING, verbose_name="Пользователю", related_name='exchanges_to')
+    word = models.OneToOneField(Word, on_delete=models.DO_NOTHING, verbose_name="Слово", related_name='exchanges_in') 
+    date =  models.DateTimeField(verbose_name="Дата создания", auto_now_add=True)
+    status = models.CharField(max_length=15, choices=STATUS)
+
     
 
 
