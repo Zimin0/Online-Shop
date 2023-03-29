@@ -11,17 +11,19 @@ from django.db.models import Q, QuerySet
 
 # Create your views here.
 def home(request):
-    context = {'user':request.user}
+    context = {'user':request.user} ## !!!!!!!!!!!!!!!!!!!11 обработать пустые пост запросы
     if request.method == 'POST': # POST запрос приходит в виде '1.0', где 1 - pk обмена,  0 - status
         exchange_pk, status = request.POST['status'].split('.')
+        curr_exch = Exchange.objects.get(pk=exchange_pk)
         if status == '1':
-            curr_exch = Exchange.objects.filter(pk=exchange_pk)
-            curr_exch.update(status="AC") # меняем статус обмена на совершенный
-            to_user = curr_exch[0].to_user # юзер, которому достанется слово
-            curr_word = QuerySet(curr_exch[0].word) # текущее слово (объект), которым меняются пользователи
-            curr_word.update(author=to_user)
+            curr_exch.status = 'AC' # меняем статус обмена на совершенный
+            to_user = curr_exch.to_user # юзер, которому достанется слово
+            curr_word = curr_exch.word # текущее слово (объект), которым меняются пользователи
+            curr_word.author = to_user
+            curr_word.save()
         else:
-            print(1)
+            curr_exch.status = 'RE'
+        curr_exch.save()
 
 
     
