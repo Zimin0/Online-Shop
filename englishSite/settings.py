@@ -23,7 +23,8 @@ ALLOWED_HOSTS = ["*"]
 #
 #FORM_RENDERER = "englishSite.settings.CustomFormRenderer"
 
-
+MEDIA_ROOT = f'{BASE_DIR}/media'
+MEDIA_URL = '/media/'
 LOGIN_URL = 'login'
 # Пользователи будут перенаправлены на главную страницу после входа в систему и выхода из нее 
 LOGIN_REDIRECT_URL = 'main'

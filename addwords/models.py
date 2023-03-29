@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Word(models.Model):
-    
     class Meta:
         verbose_name = "Слово"
         verbose_name_plural = "Слова"
@@ -27,7 +26,8 @@ class Word(models.Model):
     rate = models.IntegerField(verbose_name="Рейтинг", default=5, help_text="Личный рейтинг слова от 1 до 10")
     add_date = models.DateTimeField(verbose_name="Дата создания", auto_now_add=True, blank=True)
     archived = models.BooleanField(verbose_name="Архивировано", help_text="Будет ли слово отображаться в словаре?", default=False)
-    author =  models.ForeignKey(User, on_delete=models.PROTECT, verbose_name="Автор", help_text="Кто добавил слово", blank=True, null=True)
+    author =  models.ForeignKey(User, on_delete=models.PROTECT, verbose_name="Автор", help_text="Кто добавил слово", blank=True, null=True, related_name='user_words')
+    img = models.ImageField(upload_to="for_words", null=True, blank=True, verbose_name="Изображение", help_text='Картинка, которая поможеть запомнить слово.')
 
     def __str__(self):
         return self.word

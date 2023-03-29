@@ -22,6 +22,8 @@
         <h3> <a href="{% url 'ex_word' word.pk %}">{{ word }}</a> </h3>
         <hr>
     {% endfor %}
+    <h2>Предложения об обмене:</h2>
+    <hr>
 {% else %}
 <p3>Мы не знаем, кто Вы...<br> <a href="{% url 'login' %}">Войдите</a> в свой аккаунт или <a href="{% url 'signup' %}">зарегестрируйтесь</a>!</p3>
 {% endif %}

@@ -46,3 +46,8 @@ nav a {
 section {
     margin-left: 230px;
 }
+
+img {
+    width: 200px;
+    height: 100px;
+}
