@@ -11,27 +11,31 @@ from django.db.models import Q, QuerySet
 
 # Create your views here.
 def home(request):
-    context = {'user':request.user} ## !!!!!!!!!!!!!!!!!!!11 обработать пустые пост запросы
-    if request.method == 'POST': # POST запрос приходит в виде '1.0', где 1 - pk обмена,  0 - status
-        exchange_pk, status = request.POST['status'].split('.')
-        curr_exch = Exchange.objects.get(pk=exchange_pk)
-        if status == '1':
-            curr_exch.status = 'AC' # меняем статус обмена на совершенный
-            to_user = curr_exch.to_user # юзер, которому достанется слово
-            curr_word = curr_exch.word # текущее слово (объект), которым меняются пользователи
-            curr_word.author = to_user
-            curr_word.save()
-        else:
-            curr_exch.status = 'RE'
-        curr_exch.save()
-
-
+    print("-----------------------------------")
+    print(request.user.pk)
+    print("-----------------------------------")
+    context = {}
     
-    author_words = Word.objects.filter(author=request.user.pk)
-    q = Q(from_user=request.user) | Q(to_user=request.user)
-    exchanges = Exchange.objects.filter(q)
-    context['author_words'] = author_words
-    context['exchanges'] = exchanges
+    if request.user.pk != None: # Если пользователь не Анонимный - т е незарегестрированный
+        context = {'user':request.user} ## !!!!!!!!!!!!!!!!!!!11 обработать пустые пост запросы
+        if request.method == 'POST': # POST запрос приходит в виде '1.0', где 1 - pk обмена,  0 - status
+            exchange_pk, status = request.POST['status'].split('.')
+            curr_exch = Exchange.objects.get(pk=exchange_pk)
+            if status == '1' and curr_exch.status == 'IN':
+                curr_exch.status = 'AC' # меняем статус обмена на совершенный
+                to_user = curr_exch.to_user # юзер, которому достанется слово
+                curr_word = curr_exch.word # текущее слово (объект), которым меняются пользователи
+                curr_word.author = to_user
+                curr_word.save() # update_fields=["name"]
+            else: # если пользователь отклонил заявку или статус заявки уже IN или RE
+                curr_exch.status = 'RE'
+            curr_exch.save()
+
+        author_words = Word.objects.filter(author=request.user.pk)
+        q =  Q(from_user=request.user) & Q(status='IN')
+        exchanges = Exchange.objects.filter(q)
+        context['author_words'] = author_words
+        context['exchanges'] = exchanges
     
 
     return render(request, "registration/home.html", context)
