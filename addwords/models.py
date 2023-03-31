@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Word(models.Model):
-
     class Meta:
         verbose_name = "Слово"
         verbose_name_plural = "Слова"
@@ -11,7 +10,7 @@ class Word(models.Model):
         ordering = ['word', 'type'] # параметры сортировки записей по умолчанию
 
     TYPE = (
-        (None, "Выберите тип слова"), # заменяет --------- на Выберите тип слова
+        (None, "Выберите тип слова"), # или None -  заменяет --------- на Выберите тип слова
         ('Verb', 'Verb (сущ.)' ),
         ('Noun', 'Noun (глаг.)'),
         ('Adjective', 'Adjective (прил.)'),
@@ -24,6 +23,11 @@ class Word(models.Model):
     translation = models.CharField(max_length=25, verbose_name="Перевод")
     discription = models.TextField(blank=True, verbose_name="Доп. комментарий к переводу")
     synonyms = models.ManyToManyField("Word", verbose_name="Синонимы", related_name='+', blank=True)
+    rate = models.IntegerField(verbose_name="Рейтинг", default=5, help_text="Личный рейтинг слова от 1 до 10")
+    add_date = models.DateTimeField(verbose_name="Дата создания", auto_now_add=True, blank=True)
+    archived = models.BooleanField(verbose_name="Архивировано", help_text="Будет ли слово отображаться в словаре?", default=False)
+    author =  models.ForeignKey(User, on_delete=models.PROTECT, verbose_name="Автор", help_text="Кто добавил слово", blank=True, null=True, related_name='user_words')
+    img = models.ImageField(upload_to="for_words", null=True, blank=True, verbose_name="Изображение", help_text='Картинка, которая поможеть запомнить слово.')
 
     def __str__(self):
         return self.word
@@ -44,17 +48,36 @@ class Language(models.Model):
 
     class Meta:
         verbose_name = "Язык"
-        verbose_name = "Языки"
+        verbose_name_plural = "Языки"
 
     name =  models.CharField(max_length=30, null=True, blank=False, verbose_name="Язык")
-    
+
     def __str__(self):
         return self.name
     
     def save(self, *args, **kwargs):
-        print("Запись language сохранена!")
+        print("Запись language сохранена!") # заменить на log
         super().save(*args, **kwargs)
-    
+
+
+class Exchange(models.Model):
+    class Meta:
+        verbose_name = "Обмен словами"
+        verbose_name_plural = "Обмены словами"
+        ordering = ['date',]
+
+    STATUS = (
+        ('IN', 'In progress'),
+        ('RE', 'Rejected'),
+        ('AC', 'Accepted')
+    )
+
+    from_user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="От пользователя", related_name='exchanges_from') 
+    to_user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Пользователю", related_name='exchanges_to')
+    word = models.ForeignKey(Word, on_delete=models.CASCADE, verbose_name="Слово", related_name='exchanges_in') 
+    date =  models.DateTimeField(verbose_name="Дата создания", auto_now_add=True)
+    status = models.CharField(max_length=15, choices=STATUS, default='IN')
+
     
 
 
