@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'addwords.apps.AddwordsConfig',
     'users.apps.UsersConfig', # можно просто users
     'debug_toolbar',
+    'rest_framework',
+    'myapi.apps.MyapiConfig',
 ]
 
 

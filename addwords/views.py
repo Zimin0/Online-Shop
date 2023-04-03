@@ -52,6 +52,21 @@ def users_list(request):
 	users = User.objects.all()
 	context['users'] = users	
 	return render(request, "addwords/users.html", context)
+
+
+
+
+
+from rest_framework import viewsets
+
+from .serializers import WordSerializer
+from .models import Word
+
+class WordViewSet(viewsets.ModelViewSet):
+    """ Он будет обрабатывать GET и POST для Heroe без дополнительной работы. """
+    queryset = Word.objects.all()
+    serializer_class = WordSerializer
+
 '''
 
 
