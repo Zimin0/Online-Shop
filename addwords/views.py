@@ -45,6 +45,7 @@ def ex_word(request, word_id):
 
 def info(request):
 	context = {}
+	print(context)
 	return render(request, 'addwords/information.html', context)
 
 def users_list(request):
