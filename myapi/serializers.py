@@ -1,8 +1,10 @@
 from rest_framework import serializers
 
-from .models import Hero
+from addwords.models import Word
 
-class HeroSerializer(serializers.HyperlinkedModelSerializer):
+
+
+class WordSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Hero
-        fields = ('name', 'alias')
+        model = Word
+        fields = ('word', 'translation', 'add_date')
