@@ -45,16 +45,15 @@ def ex_word(request, word_id):
 
 def info(request):
 	context = {}
-	print(context)
 	return render(request, 'addwords/information.html', context)
 
 def users_list(request):
 	context = {}
 	users = User.objects.all()
-	context['users'] = users	
+	context['users'] = users
 	return render(request, "addwords/users.html", context)
 
-
+# git add -i
 
 
 
