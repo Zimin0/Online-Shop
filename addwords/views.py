@@ -29,7 +29,6 @@ def new_product(request):
 		if form.is_valid():
 			product = form.save(commit=False)
 			product.saller = request.user # request.user возвращает текущего пользователя
-			product.archived = False
 			product.save()
 			return redirect('main')
 	else:
@@ -39,12 +38,14 @@ def new_product(request):
 def new_order(request):
 	""" Добавление нового заказа."""
 	if request.method == 'POST':
-		form = OrderForm(request.user, request.POST) # request.user передается для выборки только товаров конкретного юзера. Реализовано в forms.py
+		form = OrderForm(request.user, request.POST, initial={'from_user': request.user}) # request.user передается для выборки только товаров конкретного юзера. Реализовано в forms.py
 		if form.is_valid():
-			product = form.save(commit=False)
-			product.saller = request.user # request.user возвращает текущего пользователя
-			product.archived = False
-			product.save()
+			order = form.save(commit=False) # ??????????????
+			order.from_user = request.user
+			print('---------------------')
+			print(request.POST)
+			print('---------------------')
+			order.save()
 			return redirect('home')
 	else:
 		form = OrderForm(request.user)

@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 
 class ProductForm(forms.ModelForm):
-    template_name = "addwords/new_form.html" # only since Django4
+    #template_name = "addwords/new_form.html" # only since Django4
     class Meta:
         model = Product
         fields = ('name', 'category', 'discription', 'price', 'img') # можно '__all__
@@ -15,8 +15,8 @@ class OrderForm(forms.ModelForm):
         super(OrderForm, self).__init__(*args, **kwargs)
         self.fields['products'].queryset = Product.objects.filter(seller=User_model)
 
-    template_name = "addwords/new_form.html" # only since Django4
+    #template_name = "addwords/new_form.html" # only since Django4
     class Meta:
         model = Order
-        fields = ('products', 'from_user', 'to_user')
+        fields = ('products','to_user')
 
