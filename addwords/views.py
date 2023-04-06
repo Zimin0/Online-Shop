@@ -42,10 +42,13 @@ def new_order(request):
 		if form.is_valid():
 			order = form.save(commit=False) # ??????????????
 			order.from_user = request.user
+			
+			
 			print('---------------------')
 			print(request.POST)
 			print('---------------------')
 			order.save()
+			form.save_m2m()
 			return redirect('home')
 	else:
 		form = OrderForm(request.user)
