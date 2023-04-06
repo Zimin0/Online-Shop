@@ -1,0 +1,63 @@
+{% extends "basic.html" %}
+
+{%  block title %}
+Магазин
+{% endblock %}
+
+{%  block page_title %}
+{{ product.name }}
+{% endblock %}
+
+
+{% block content %}
+<p> <b>Цена:</b> {{ product.price }}р </p>
+<hr>
+
+
+<p> <b>Описание:</b> {{ product.discription }} </p>
+<hr>
+{% if user.is_authenticated %}
+<!------------Если ли синонимы----------------
+{% if product.synonyms.count == 0 %}
+<p> <b>Синонимы:</b> Нет </p>
+<hr>
+{% else %}
+<p> <b>Синонимы:</b> 
+    {% for sy in product.synonyms.all  %}
+        <a href="{% url 'ex_product' sy.pk  %}">{{ sy }}</a>,
+    {% endfor %}
+    </p>
+<hr>
+{% endif %}
+------------------------------------------->
+<p> <b>Категория:</b> {{ product.category }} </p>
+<hr>
+<!--
+<p> <b>Рейтинг (от {{ product.author }}):</b> {{ product.rate }} </p>
+<hr>
+-->
+<p> <b>Дата добавления:</b> {{ product.add_date }} </p>
+<hr>
+<p> <b>Продавец:</b> {{ product.saller }} </p>
+<hr>
+<!------------Архивировано слово или нет----------------->
+{% if product.archived %}
+    <p> <b>Архивирован:</b> Да </p>
+    <hr>
+{% else %}
+    <p> <b>Архивирован:</b> Нет </p>
+<hr>
+{% endif %}
+
+<!------------------------------------------------------->
+    {% if product.img != None %}
+        <p> <b>Картинка:</b> </p> <img style="width: 320px; height: 200px; border-radius: 30px;" src="{{ product.img.url }}">
+        <hr>
+    {% else %}
+        <p> <b>Картинка:</b> Отсутствует</p> 
+        <hr>
+    {% endif %}
+{% else %}
+<h2> <a href="{% url 'login' %}">Войдите</a>, чтобы увидеть больше информации о слове...</h2>
+{% endif %}
+{% endblock %}

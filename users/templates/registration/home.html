@@ -1,7 +1,7 @@
 {% extends "basic.html" %}
 
 {%  block title %}
-Словарь
+Магазин
 {% endblock %}
 
 {%  block page_title %}
@@ -16,23 +16,32 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-    <h2>Ваши слова:</h2>
+    <h2>Ваши товары:</h2>
     <hr>
-    {% for word in author_words %}
-        <h3> <a href="{% url 'ex_word' word.pk %}">{{ word }}</a> </h3>
+    {% for product in user_products %}
+        <h3> <a href="{% url 'ex_product' product.pk %}">{{ product }}</a> </h3>
         <hr>
     {% endfor %}
-    <h2>Предложения об обмене:</h2>
+
+    <button><a href="{% url 'new_order' %}">Создать новый заказ</a></button> 
     <hr>
-    {% for exch in exchanges %}
-        <h3> {{ exch.from_user }} >>> {{ exch.to_user }}. WORD: "<a href="{% url 'ex_word' exch.word.pk %}">{{ exch.word }}</a>" </h3> 
-        <h3>STATUS: {{  exch.status }}</h3>
+    <h2>Предложения о продаже:</h2>
+
+    <hr>
+    {% for ord in orders %}
+        <h3> {{ ord.from_user }} >>> {{ ord.to_user }}</h3> 
+            <h3>Товары:
+            {% for prod in ord.products.all %}
+                <a href="">{{ prod }},</a>
+            {% endfor %}
+            </h3>
+        <h3>STATUS: {{  ord.status }}</h3>
         <h3><a href="/">[link]</a></h3>
 
         <form action="{% url 'home' %}" method="post"> 
                 {% csrf_token %}
-                <button type="submit" name="status" value="{{ exch.pk }}.1">Подтвердить</button>
-                <button type="submit" name="status" value="{{ exch.pk }}.0">Отказать</button>
+                <button type="submit" name="status" value="{{ ord.pk }}.1">Подтвердить</button>
+                <button type="submit" name="status" value="{{ ord.pk }}.0">Отказать</button>
         </form>
         <hr>
     {% endfor %}

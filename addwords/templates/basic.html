@@ -3,7 +3,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-        <title>{% block title %}Главная{% endblock %}- Словарь</title>
+        <title>{% block title %}Главная{% endblock %}- Магазин</title>
         <link rel="stylesheet" type="text/css" href="{% static 'addwords/style.css' %}">
     </head>
     <body>
@@ -13,7 +13,7 @@
         </header>
         <nav>
             <a href="{% url 'main' %}"><li>Главная</li></a>
-            <a href="{% url 'new' %}"><li>Добавить слово</li></a>
+            <a href="{% url 'new' %}"><li>Добавить товар</li></a>
             <a href="/admin/"><li>Админ панель</li></a>
             <a href="{% url 'info' %}"><li>Функции для авторизованных пользователей</li></a>
             <hr>

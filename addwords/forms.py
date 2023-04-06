@@ -1,9 +1,19 @@
 from django import forms
-from .models import Word
+from .models import Product, Order
+from django.contrib.auth.models import User
 
 
-class WordForm(forms.ModelForm):
+class ProductForm(forms.ModelForm):
     template_name = "addwords/new_form.html" # only since Django4
     class Meta:
-        model = Word
-        fields = ('word', 'language', 'type', 'translation', 'discription', 'rate')
+        model = Product
+        fields = ('name', 'category', 'discription', 'price', 'img') # можно '__all__
+
+
+class OrderForm(forms.ModelForm):
+
+    template_name = "addwords/new_form.html" # only since Django4
+    class Meta:
+        model = Order
+        fields = ('products', 'from_user', 'to_user')
+

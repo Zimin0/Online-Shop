@@ -85,8 +85,8 @@ class Category(models.Model):
         verbose_name = "Категория товаров"
         verbose_name_plural = "Категории товаров"
     
-    # def __str__(self):
-    #     return self.name
+    def __str__(self):
+        return self.name
 
     name = models.CharField(max_length=40, null=True, blank=False, verbose_name="Название")
 
@@ -95,15 +95,17 @@ class Product(models.Model):
         verbose_name = "Товар"
         verbose_name_plural = "Товары"  
     
-    # def __str__(self):
-    #     return self.name
+    def __str__(self):
+        return self.name
     
     name = models.CharField(max_length=400, null=True, blank=False, verbose_name="Название")
     price = models.IntegerField(verbose_name="Цена", default=0)
     discription = models.TextField(blank=True, verbose_name="Описание", help_text="Дополнительная информация о товаре, его характерестиках и свойствах.")
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, related_name="categ_products", verbose_name="Категория", help_text="Группа товара, по которой будет фильтроваться их список.")
-    saller = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Продавец", related_name='user_products')
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name="categ_products", verbose_name="Категория", help_text="Группа товара, по которой будет фильтроваться их список.")
+    seller = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Продавец", related_name='user_products')
     add_date = models.DateTimeField(auto_now_add=True)
+    archived = models.BooleanField(verbose_name="Архивировано", help_text="Будет ли слово отображаться в каталоге?", default=False)
+    img = models.ImageField(upload_to="for_products", null=True, blank=True, verbose_name="Изображение")
 
 
 
@@ -111,6 +113,9 @@ class Order(models.Model):
     class Meta:
         verbose_name = "Заказ пользователя"
         verbose_name_plural = "Заказы пользователей"
+    
+    def __str__(self):
+        return f"{self.from_user} --> {self.to_user}" 
 
     STATUS = (
         ('IN', 'In progress'),
@@ -125,5 +130,5 @@ class Order(models.Model):
 
 
 class AdvUser(models.Model):
-    is_saller = models.BooleanField(default=True) # изначально это поле содержит None
+    #is_activated = models.BooleanField(default=True) # изначально это поле содержит None
     user = models.OneToOneField(User, on_delete=models.CASCADE)

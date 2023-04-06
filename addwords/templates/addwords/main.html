@@ -1,24 +1,24 @@
 {% extends "basic.html" %}
 
 {% block title %}
-Словарь
+Магазин
 {% endblock %}
 
 {%  block page_title %}
-Словарь
+Магазин
 {% endblock %}
 
 
 {% block content %}
-    <h1>Все слова:</h1>
+    <h1>Все товары:</h1>
     {% if user.is_authenticated %}
         <p>Фильтр по:</p>
         <form action="{% url 'main' %}" method="get"> 
             <select name="selecter">
                 <option value="None">--------</option>
-                <option value="word">Названию</option>
-                <option value="type">Типу (n,v,a)</option>
-                <option value="translation">Переводу</option>
+                <option value="name">Названию</option>
+                <option value="category">Категории</option>
+                <option value="price">Цене</option>
               </select>
               <button type="submit" value="Применить">Применить</button>
         </form>
@@ -28,8 +28,11 @@
         
     {% endif %}
     <hr>
-    {% for word in words %}
-        <h2> <a href="{% url 'ex_word' word.pk %}"> {{ word.word }} </a>  <h5> <a href="{% url 'users' %}">(by {{ word.author }})</a></h5> </h2>  <p2>{{ word.translation }} <br></p2>
+    {% for product in products %}
+        <h2> <a href="{% url 'ex_product' product.pk %}"> {{ product.name }} </a>  
+            <h2> {{ product.price }}р</h2>
+            <h5> <a href="{% url 'users' %}">(by {{ product.seller }})</a></h5>
+         </h2>  <p2>{{ product.category }} <br></p2>
         <hr>
     {% endfor %}
 {% endblock %}

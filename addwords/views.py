@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, HttpResponse
-from .models import Word
+from .models import Product
 from django.contrib.auth.decorators import login_required
-from .forms import WordForm
+from .forms import ProductForm, OrderForm
 from django.contrib.auth.models import User
 
 
@@ -11,36 +11,50 @@ from django.contrib.auth.models import User
 # а только для read-only операций.
 
 def main(request):
-	AMOUNT_OF_WORDS = 15
+	AMOUNT_OF_PRODUCTS = 15
 	if request.GET.get('selecter', False) not in ("None", False):
 		sort_name = str(request.GET.get('selecter', False))
-		words = Word.objects.filter(archived=False).order_by(sort_name)[:AMOUNT_OF_WORDS] # 
+		products = Product.objects.filter(archived=False).order_by(sort_name)[:AMOUNT_OF_PRODUCTS] 
 	else:
-		words = Word.objects.filter(archived=False)[:AMOUNT_OF_WORDS]
-	context = {"words":words}
+		products = Product.objects.filter(archived=False)[:AMOUNT_OF_PRODUCTS]
+	context = {"products":products}
 
 	return render(request, "addwords/main.html", context)
 
 #@login_required # будет перебрасывать на страницу LOGIN_URL, если юзер не вошел в систему.
 # Вы можете сделать то же самое вручную, путём тестирования request.user.is_authenticated, но декоратор намного удобнее!
-def new_word(request):
+def new_product(request):
 	if request.method == 'POST':
-		form = WordForm(request.POST)
+		form = ProductForm(request.POST, request.FILES) # request.FILES - для загрузки файлов
 		if form.is_valid():
-			word = form.save(commit=False)
-			word.author = request.user # request.user возвращает текущего пользователя
-			word.archived = False
-			word.save()
+			product = form.save(commit=False)
+			product.saller = request.user # request.user возвращает текущего пользователя
+			product.archived = False
+			product.save()
 			return redirect('main')
 	else:
-		form = WordForm()
-	return render(request, 'addwords/add.html', {'form': form})
+		form = ProductForm()
+	return render(request, 'addwords/newOrder.html', {'form': form}) 
 
-def ex_word(request, word_id):
-	word = Word.objects.get(pk=word_id)
-	context = {'word': word}
-	# print(User.objects.first().user_words.all())
-	return render(request, 'addwords/One_word.html', context)
+def new_order(request):
+	""" Добавление нового заказа."""
+	if request.method == 'POST':
+		form = OrderForm(request.POST)
+		if form.is_valid():
+			product = form.save(commit=False)
+			product.saller = request.user # request.user возвращает текущего пользователя
+			product.archived = False
+			product.save()
+			return redirect('home')
+	else:
+		form = OrderForm()
+	return render(request, 'addwords/newOrder.html', {'form': form})
+
+def ex_product(request, word_id):
+	product = Product.objects.get(pk=word_id)
+	context = {'product': product}
+	#print(User.objects.first().user_words.all())
+	return render(request, 'addwords/exactProduct.html', context)
 
 
 def info(request):
@@ -57,15 +71,15 @@ def users_list(request):
 
 
 
-from rest_framework import viewsets
+# from rest_framework import viewsets
 
-from .serializers import WordSerializer
-from .models import Word
+# from .serializers import WordSerializer
+# from .models import Word
 
-class WordViewSet(viewsets.ModelViewSet):
-    """ Он будет обрабатывать GET и POST для Heroe без дополнительной работы. """
-    queryset = Word.objects.all()
-    serializer_class = WordSerializer
+# class WordViewSet(viewsets.ModelViewSet):
+#     """ Он будет обрабатывать GET и POST для Heroe без дополнительной работы. """
+#     queryset = Word.objects.all()
+#     serializer_class = WordSerializer
 
 '''
 
