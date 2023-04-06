@@ -39,7 +39,7 @@ def new_product(request):
 def new_order(request):
 	""" Добавление нового заказа."""
 	if request.method == 'POST':
-		form = OrderForm(request.POST)
+		form = OrderForm(request.user, request.POST) # request.user передается для выборки только товаров конкретного юзера. Реализовано в forms.py
 		if form.is_valid():
 			product = form.save(commit=False)
 			product.saller = request.user # request.user возвращает текущего пользователя
@@ -47,7 +47,7 @@ def new_order(request):
 			product.save()
 			return redirect('home')
 	else:
-		form = OrderForm()
+		form = OrderForm(request.user)
 	return render(request, 'addwords/newOrder.html', {'form': form})
 
 def ex_product(request, word_id):

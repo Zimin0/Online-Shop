@@ -11,6 +11,9 @@ class ProductForm(forms.ModelForm):
 
 
 class OrderForm(forms.ModelForm):
+    def __init__(self, User_model, *args, **kwargs): # Реализация вывода в форму только товаров конкретного юзера.
+        super(OrderForm, self).__init__(*args, **kwargs)
+        self.fields['products'].queryset = Product.objects.filter(seller=User_model)
 
     template_name = "addwords/new_form.html" # only since Django4
     class Meta:
