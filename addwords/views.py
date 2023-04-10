@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, HttpResponse
-from .models import Product
+from .models import Product, Category
 from django.contrib.auth.decorators import login_required
 from .forms import ProductForm, OrderForm
 from django.contrib.auth.models import User
+from django.db.models import Q
 
 
 
@@ -11,13 +12,21 @@ from django.contrib.auth.models import User
 # а только для read-only операций.
 
 def main(request):
+	""" Главная страница """
 	AMOUNT_OF_PRODUCTS = 15
 	if request.GET.get('selecter', False) not in ("None", False):
 		sort_name = str(request.GET.get('selecter', False))
 		products = Product.objects.filter(archived=False).order_by(sort_name)[:AMOUNT_OF_PRODUCTS] 
 	else:
 		products = Product.objects.filter(archived=False)[:AMOUNT_OF_PRODUCTS]
-	context = {"products":products}
+
+	categories = Category.objects.all().order_by("name")
+
+	
+	context = {
+		"products":products,
+		"categories":categories,
+		}
 
 	return render(request, "addwords/main.html", context)
 
@@ -56,13 +65,35 @@ def new_order(request):
 def ex_product(request, word_id):
 	product = Product.objects.get(pk=word_id)
 	context = {'product': product}
-	#print(User.objects.first().user_words.all())
 	return render(request, 'addwords/exactProduct.html', context)
 
 
 def info(request):
 	context = {}
 	return render(request, 'addwords/information.html', context)
+
+def ex_category(request, category_id):
+	""" Выбраная категория товаров """
+	context = {}
+	AMOUNT_OF_PRODUCTS = 15
+	current_category = Category.objects.get(pk=category_id) # получение текущей выбраной категории
+	q = Q(archived=False) & Q(category=current_category) # Выборка неархивированой записи и записи из требуемой категории
+	categories = Category.objects.all().order_by("name")
+	
+	if request.GET.get('selecter', False) not in ("None", False):
+		sort_name = str(request.GET.get('selecter', False))
+		products = Product.objects.filter(q).order_by(sort_name)[:AMOUNT_OF_PRODUCTS] 
+	else:
+		products = Product.objects.filter(q)[:AMOUNT_OF_PRODUCTS]
+
+	current_cat = Category.objects.get(pk=category_id)
+	context = {
+		"products":products,
+		"categories":categories,
+		"current_cat":current_cat,
+		}
+
+	return render(request, "addwords/main.html", context)
 
 def users_list(request):
 	context = {}

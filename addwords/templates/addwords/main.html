@@ -10,6 +10,16 @@
 
 
 {% block content %}
+    <h1>Категория: {{ current_cat.name_with_quotes }}</h1> 
+    {% for cat in categories %}
+        {% if cat.pk != current_cat.pk %}
+            <a href="{% url 'ex_category' cat.pk %}">{{ cat.name }}</a>
+        {% endif %}
+    {% endfor %}
+    {{ cat.name }}
+    <hr>
+        
+    
     <h1>Все товары:</h1>
     {% if user.is_authenticated %}
         <p>Фильтр по:</p>
@@ -25,13 +35,12 @@
         <form action="{% url 'main' %}" method="get"> 
             <button type="submit" value="Сбросить">Сбросить</button>
         </form>
-        
     {% endif %}
     <hr>
     {% for product in products %}
         <h2> <a href="{% url 'ex_product' product.pk %}"> {{ product.name }} </a>  
-            <h2> {{ product.price }}р</h2>
-            <h5> <a href="{% url 'users' %}">(by {{ product.seller }})</a></h5>
+            <h2> {{ product.price }}₽ </h2>
+            <h5> <a href="{% url 'users' %}">(by {{ product.seller }}) [{{ product.add_date|date:"d M, Y" }}]</a></h5>
          </h2>  <p2>{{ product.category }} <br></p2>
         <hr>
     {% endfor %}

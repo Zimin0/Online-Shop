@@ -87,6 +87,11 @@ class Category(models.Model):
     
     def __str__(self):
         return self.name
+    
+    def name_with_quotes(self):
+        """ Используется для вывода вы шаблоне"""
+        return f'"{self.name}"'
+    
 
     name = models.CharField(max_length=40, null=True, blank=False, verbose_name="Название")
 
@@ -106,6 +111,10 @@ class Product(models.Model):
     add_date = models.DateTimeField(auto_now_add=True)
     archived = models.BooleanField(verbose_name="Архивировано", help_text="Будет ли слово отображаться в каталоге?", default=False)
     img = models.ImageField(upload_to="for_products", null=True, blank=True, verbose_name="Изображение")
+
+
+    def get_add_date(self):
+        return f"Добавлен {self.add_date}"
 
 
 
