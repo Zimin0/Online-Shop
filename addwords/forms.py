@@ -7,13 +7,14 @@ class ProductForm(forms.ModelForm):
     #template_name = "addwords/new_form.html" # only since Django4
     class Meta:
         model = Product
-        fields = ('name', 'category', 'discription', 'price', 'img') # можно '__all__
+        fields = ('name', 'category', 'discription', 'price', 'img') # можно '__all__'
 
 
 class OrderForm(forms.ModelForm):
     def __init__(self, User_model, *args, **kwargs): # Реализация вывода в форму только товаров конкретного юзера.
         super(OrderForm, self).__init__(*args, **kwargs)
         self.fields['products'].queryset = Product.objects.filter(seller=User_model)
+        self.fields['to_user'].queryset = User.objects.exclude(pk=User_model.pk)
 
     #template_name = "addwords/new_form.html" # only since Django4
     class Meta:

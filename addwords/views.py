@@ -24,6 +24,7 @@ def main(request):
 #@login_required # будет перебрасывать на страницу LOGIN_URL, если юзер не вошел в систему.
 # Вы можете сделать то же самое вручную, путём тестирования request.user.is_authenticated, но декоратор намного удобнее!
 def new_product(request):
+	"""Добавление товара заказа."""
 	if request.method == 'POST':
 		form = ProductForm(request.POST, request.FILES) # request.FILES - для загрузки файлов
 		if form.is_valid():
@@ -36,14 +37,12 @@ def new_product(request):
 	return render(request, 'addwords/newOrder.html', {'form': form}) 
 
 def new_order(request):
-	""" Добавление нового заказа."""
+	"""Добавление нового заказа."""
 	if request.method == 'POST':
 		form = OrderForm(request.user, request.POST, initial={'from_user': request.user}) # request.user передается для выборки только товаров конкретного юзера. Реализовано в forms.py
 		if form.is_valid():
 			order = form.save(commit=False) # ??????????????
 			order.from_user = request.user
-			
-			
 			print('---------------------')
 			print(request.POST)
 			print('---------------------')
