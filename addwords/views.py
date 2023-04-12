@@ -5,15 +5,16 @@ from .forms import ProductForm, OrderForm
 from django.contrib.auth.models import User
 from django.db.models import Q
 
-
-
+import logging
+logger = logging.getLogger(__name__)
 # Еще одна причина перейти на GET, это то, что GET не должен
 # использоваться с методами, которые меняют состояние сервера, 
 # а только для read-only операций.
 
 def main(request):
 	""" Главная страница """
-	AMOUNT_OF_PRODUCTS = 15
+	logger.error("Test!!")
+	AMOUNT_OF_PRODUCTS = 50
 	if request.GET.get('selecter', False) not in ("None", False):
 		sort_name = str(request.GET.get('selecter', False))
 		products = Product.objects.filter(archived=False).order_by(sort_name)[:AMOUNT_OF_PRODUCTS] 
@@ -21,6 +22,7 @@ def main(request):
 		products = Product.objects.filter(archived=False)[:AMOUNT_OF_PRODUCTS]
 
 	categories = Category.objects.all().order_by("name")
+
 
 	
 	context = {
@@ -52,9 +54,6 @@ def new_order(request):
 		if form.is_valid():
 			order = form.save(commit=False) # ??????????????
 			order.from_user = request.user
-			print('---------------------')
-			print(request.POST)
-			print('---------------------')
 			order.save()
 			form.save_m2m()
 			return redirect('home')
