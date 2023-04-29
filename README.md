@@ -1,5 +1,5 @@
-# Online_dictionary
-Represents your own online dictionary with words that your add by yourself.
+# Online-Shop
+Represents your own online shop.
 # Versions:
 * Django 3.2.16
 * Python 3.8.8
