@@ -1,5 +1,5 @@
 # Online-Shop
-Represents online shop.
+Represents online shop. Project was started to improve skills in Django.
 # Versions:
 * Django 3.2.16
 * Python 3.8.8
