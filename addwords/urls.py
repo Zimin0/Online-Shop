@@ -1,7 +1,6 @@
 from django.urls import path, include
 from .views import main, new_product, ex_product, info, users_list, new_order, ex_category
 from rest_framework import routers
-from . import views
 
 #router = routers.DefaultRouter()
 # """ Маршрутизатор REST Framework будет следить за тем, чтобы наши запросы динамически попадали в нужный ресурс. 

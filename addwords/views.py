@@ -17,9 +17,9 @@ logger = logging.getLogger(__name__)
 # !!!!!!!!!!!!
 def main(request):
 	""" Главная страница """
-	logger.error("error!!")
-	logger.warning("warning!!")
-	logger.critical("critical!!")
+	# logger.error("error!!")
+	# logger.warning("warning!!")
+	# logger.critical("critical!!")
 	AMOUNT_OF_PRODUCTS = 50
 	if request.GET.get('selecter', False) not in ("None", False):
 		sort_name = str(request.GET.get('selecter', False))
@@ -29,8 +29,6 @@ def main(request):
 
 	categories = Category.objects.all().order_by("name")
 
-
-	
 	context = {
 		"products":products,
 		"categories":categories,
@@ -46,8 +44,8 @@ def new_product(request):
 		form = ProductForm(request.POST, request.FILES) # request.FILES - для загрузки файлов
 		if form.is_valid():
 			product = form.save(commit=False)
-			product.saller = request.user # request.user возвращает текущего пользователя
-			product.save() #update_fileds=['saller']
+			product.seller = request.user # request.user возвращает текущего пользователя
+			product.save() #update_fileds=['seller']
 			return redirect('main')
 	else:
 		form = ProductForm()

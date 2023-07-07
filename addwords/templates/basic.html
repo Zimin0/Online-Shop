@@ -15,11 +15,12 @@
             <a href="{% url 'main' %}"><li>Главная</li></a>
             <a href="{% url 'new' %}"><li>Добавить товар</li></a>
             <a href="/admin/"><li>Админ панель</li></a>
-            <a href="{% url 'info' %}"><li>Функции для авторизованных пользователей</li></a>
+            <a href="{% url 'info' %}"><li>Функции для авторизованных пользователей</li></a> 
+            <a href="{% url 'users:home' %}"><li>Личный кабинет</li></a>
             <hr>
             
             <p1>Здравствуйте, </p1>
-            <a href="{% url 'home' %}"><b>{{ user.username|default:'Guest' }}</b></a>
+            <a href="{% url 'users:home' %}"><b>{{ user.username|default:'Guest' }}</b></a>
             <hr>
             {% if user.is_authenticated %}
                 <a href="{% url 'logout' %}"><li>Выйти</li></a>

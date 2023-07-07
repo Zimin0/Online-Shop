@@ -16,6 +16,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+
+
 ###################################################################################
 #from django.forms.renderers import TemplatesSetting
 #
@@ -23,6 +25,30 @@ ALLOWED_HOSTS = ["*"]
 #    form_template_name = "addwords/new_form.html"
 #
 #FORM_RENDERER = "englishSite.settings.CustomFormRenderer"
+
+# LOGGING = {
+#     'version': 1,
+#     'filters': {
+#         'require_debug_true': {
+#             '()': 'django.utils.log.RequireDebugTrue',
+#         }
+#     },
+#     'handlers': {
+#         'console': {
+#             'level': 'DEBUG',
+#             'filters': ['require_debug_true'],
+#             'class': 'logging.StreamHandler',
+#         }
+#     },
+#     'loggers': {
+#         'django.db.backends': {
+#             'level': 'DEBUG',
+#             'handlers': ['console'],
+#         }
+#     }
+# }
+
+# SHELL_PLUS_PRINT_SQL = True
 
 MEDIA_ROOT = f'{BASE_DIR}/media'
 MEDIA_URL = '/media/'
@@ -43,7 +69,11 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'rest_framework',
     'myapi.apps.MyapiConfig',
+    'django_extensions',
+    'django_sql_debug',
 ]
+
+# SQL_DEBUG_ENABLE_PARAMS = True
 
 INTERNAL_IPS = [
     # ...
@@ -59,7 +89,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'django_sql_debug.DebugSQLMiddleware',
 ]
 
 ROOT_URLCONF = 'englishSite.urls'
@@ -104,6 +134,8 @@ DATABASES = {
     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
