@@ -11,9 +11,15 @@ logger = logging.getLogger(__name__)
 # использоваться с методами, которые меняют состояние сервера, 
 # а только для read-only операций.
 
+
+# !!!!!!!!!!!!
+# limit_choices_to={'is_staff': True})
+# !!!!!!!!!!!!
 def main(request):
 	""" Главная страница """
-	logger.error("Test!!")
+	logger.error("error!!")
+	logger.warning("warning!!")
+	logger.critical("critical!!")
 	AMOUNT_OF_PRODUCTS = 50
 	if request.GET.get('selecter', False) not in ("None", False):
 		sort_name = str(request.GET.get('selecter', False))
@@ -41,7 +47,7 @@ def new_product(request):
 		if form.is_valid():
 			product = form.save(commit=False)
 			product.saller = request.user # request.user возвращает текущего пользователя
-			product.save()
+			product.save() #update_fileds=['saller']
 			return redirect('main')
 	else:
 		form = ProductForm()
@@ -105,14 +111,13 @@ def users_list(request):
 
 
 # from rest_framework import viewsets
+# from .serializers import ProductSerializer
 
-# from .serializers import WordSerializer
-# from .models import Word
 
-# class WordViewSet(viewsets.ModelViewSet):
+# class ProductViewSet(viewsets.ModelViewSet):
 #     """ Он будет обрабатывать GET и POST для Heroe без дополнительной работы. """
-#     queryset = Word.objects.all()
-#     serializer_class = WordSerializer
+#     queryset = Product.objects.all()
+#     serializer_class = ProductSerializer
 
 '''
 

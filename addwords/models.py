@@ -116,8 +116,6 @@ class Product(models.Model):
     def get_add_date(self):
         return f"Добавлен {self.add_date}"
 
-
-
 class Order(models.Model):
     class Meta:
         verbose_name = "Заказ пользователя"
@@ -136,7 +134,6 @@ class Order(models.Model):
     to_user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Пользователю", related_name='exchanges_to')
     date = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=30, choices=STATUS, default='IN')
-
 
 class AdvUser(models.Model):
     #is_activated = models.BooleanField(default=True) # изначально это поле содержит None

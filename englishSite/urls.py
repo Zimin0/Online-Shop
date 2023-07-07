@@ -11,10 +11,10 @@ urlpatterns = [
     #####################_for_auth_#######################
     path('accounts/', include('django.contrib.auth.urls')) ,
     ######################################################
-    path('home/', include('users.urls')),
+    path('home/', include('users.urls'), name='home'),
     path('__debug__/', include('debug_toolbar.urls')),
     path('api/', include('myapi.urls')),
-    #path('', TemplateView.as_view(template_name='index.html'), name='home'),
+    path('', TemplateView.as_view(template_name='index.html'), name='home'),
 ] 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

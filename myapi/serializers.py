@@ -1,10 +1,17 @@
 from rest_framework import serializers
 
-from addwords.models import Word
+from addwords.models import Product, Category
 
 
 
-class WordSerializer(serializers.HyperlinkedModelSerializer):
+class ProductSerializer(serializers.HyperlinkedModelSerializer):
+    category = serializers.CharField(source="category.name")
+    seller = serializers.CharField(source="seller.username")
     class Meta:
-        model = Word
-        fields = ('word', 'translation', 'add_date')
+        model = Product
+        fields = ('name', 'price', 'category', 'seller', 'add_date', 'archived', 'img')
+
+class CategorySerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Category
+        fields = ('name',)
