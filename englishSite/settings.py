@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -44,14 +45,12 @@ INSTALLED_APPS = [
     'myapi.apps.MyapiConfig',
 ]
 
-
-
-
 INTERNAL_IPS = [
     # ...
     "127.0.0.1",
     # ...
 ]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -87,15 +86,23 @@ WSGI_APPLICATION = 'englishSite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# DATABASES = {
+# 'default': {
+# 'ENGINE': 'django.db.backends.postgresql',
+# 'NAME': 'mine_project',
+# 'USER': 'postgres',
+# 'PASSWORD': '1',
+# 'HOST': 'localhost',
+# 'PORT': '5432'
+# }
+# }
+
+
 DATABASES = {
-'default': {
-'ENGINE': 'django.db.backends.postgresql',
-'NAME': 'mine_project',
-'USER': 'postgres',
-'PASSWORD': '1',
-'HOST': 'localhost',
-'PORT': '5432'
-}
+    'default': {
+    'ENGINE': 'django.db.backends.sqlite3',
+    'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
 }
 
 # Password validation
