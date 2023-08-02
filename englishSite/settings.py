@@ -4,7 +4,6 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -16,9 +15,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
-
-
-###################################################################################
 #from django.forms.renderers import TemplatesSetting
 #
 #class CustomFormRenderer(TemplatesSetting):
@@ -52,7 +48,10 @@ ALLOWED_HOSTS = ["*"]
 
 MEDIA_ROOT = f'{BASE_DIR}/media'
 MEDIA_URL = '/media/'
+STATIC_URL = 'static/'
+STATIC_ROOT = 'static/'
 LOGIN_URL = 'login'
+
 # Пользователи будут перенаправлены на главную страницу после входа в систему и выхода из нее 
 LOGIN_REDIRECT_URL = 'main'
 LOGOUT_REDIRECT_URL = 'main'
@@ -90,6 +89,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_sql_debug.DebugSQLMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'englishSite.urls'
@@ -168,12 +168,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.2/howto/static-files/
-
-STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

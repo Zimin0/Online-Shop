@@ -77,9 +77,6 @@ from django.contrib.auth.models import User
 #     date =  models.DateTimeField(verbose_name="Дата создания", auto_now_add=True)
 #     status = models.CharField(max_length=15, choices=STATUS, default='IN')
 
-
-
-
 class Category(models.Model):
     class Meta:
         verbose_name = "Категория товаров"
@@ -91,17 +88,41 @@ class Category(models.Model):
     def name_with_quotes(self):
         """ Используется для вывода вы шаблоне"""
         return f'"{self.name}"'
-    
 
     name = models.CharField(max_length=40, null=True, blank=False, verbose_name="Название")
 
+class PublishedManager(models.Manager):
+    """ 
+    Модальный менеджер, как objects. \n
+    Вызывается: Product.published.all() \n
+    Выводит все товары со статусом archived = False
+    """
+    def get_queryset(self):
+        return super().get_queryset().filter(archived=False)
+
 class Product(models.Model):
+    objects = models.Manager() # менеджер по умолчанию
+    published = models.Manager() # менеджер, выводящий неархивированные товары
+
     class Meta:
         verbose_name = "Товар"
         verbose_name_plural = "Товары"  
+        indexes = [
+            models.Index(fields=['-add_date']) # Добавляет индекс в базу данных - ускоряет запросы, фильтрующие и упорядочивающие по данному полю
+        ]
+        unique_together = (('name', 'price'), # уникальные сочетания полей в модели
+                           (('discription', 'category', 'seller')))
+        ordering = ['add_date', 'name'] # параметры сортировки записей по умолчанию
     
     def __str__(self):
         return self.name
+    
+    def save(self, *args, **kwargs):
+        print("Запись Product сохранена!")
+        super().save(*args, **kwargs)
+    
+    def get_add_date(self):
+        return f"Добавлен {self.add_date}"
     
     name = models.CharField(max_length=400, null=True, blank=False, verbose_name="Название")
     price = models.IntegerField(verbose_name="Цена", default=0)
@@ -112,10 +133,6 @@ class Product(models.Model):
     archived = models.BooleanField(verbose_name="Архивировано", help_text="Будет ли слово отображаться в каталоге?", default=False)
     img = models.ImageField(upload_to="for_products", null=True, blank=True, verbose_name="Изображение")
 
-
-    def get_add_date(self):
-        return f"Добавлен {self.add_date}"
-
 class Order(models.Model):
     class Meta:
         verbose_name = "Заказ пользователя"
@@ -125,6 +142,7 @@ class Order(models.Model):
         return f"{self.from_user} --> {self.to_user}" 
 
     STATUS = (
+        (None, "Choose order status"), # или None -  заменяет --------- на "Choose order status"
         ('IN', 'In progress'),
         ('RE', 'Rejected'),
         ('FI', 'Finished')

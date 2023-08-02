@@ -8,8 +8,6 @@ urlpatterns = [
     path("signup/", SignUp.as_view(), name="signup"),
 ]
 
-
-
 """ 
 Urls, предоставляемые приложением auth
 

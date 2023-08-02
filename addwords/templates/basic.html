@@ -26,7 +26,7 @@
                 <a href="{% url 'logout' %}"><li>Выйти</li></a>
             {% else %}
                 <a href="{% url 'login' %}"><li>Войти</li></a>
-                <a href="{% url 'signup' %}"><li>Регистрация</li></a>
+                <a href="{% url 'users:signup' %}"><li>Регистрация</li></a>
             {% endif %}
         </nav>
         <section>
