@@ -5,13 +5,15 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('', include('addwords.urls')),
     path('admin/', admin.site.urls),
-    path('accounts/', include('django.contrib.auth.urls')) ,
-    path('home/', include('users.urls'), name='home'),
-    path('__debug__/', include('debug_toolbar.urls')),
+    path('', include('catalog.urls')),
+    path('new_order/', include('orders.urls')),
+    path('products/', include('products.urls')),
+    path('home/', include('users.urls')),
     path('api/', include('myapi.urls')),
-    path('', TemplateView.as_view(template_name='index.html'), name='home'),
+    path('accounts/', include('django.contrib.auth.urls')) ,
+    path('__debug__/', include('debug_toolbar.urls')),
+    path('', TemplateView.as_view(template_name='index.html'), name='home'), # ??????
 ] 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.MEDIA_ROOT)

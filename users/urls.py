@@ -1,11 +1,12 @@
 from django.urls import path
-from .views import home, SignUp
+from .views import home, SignUp, users_list
 
 app_name = 'users'
 
 urlpatterns = [
     path('', home, name="home"),
     path("signup/", SignUp.as_view(), name="signup"),
+    path('users/', users_list, name='users'),
 ]
 
 """ 

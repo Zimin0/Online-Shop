@@ -1,8 +1,6 @@
 from rest_framework import serializers
 
-from addwords.models import Product, Category
-
-
+from products.models import Product, Category
 
 class ProductSerializer(serializers.HyperlinkedModelSerializer):
     category = serializers.CharField(source="category.name")

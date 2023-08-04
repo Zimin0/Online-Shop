@@ -1,7 +1,6 @@
 from rest_framework import viewsets
 from .serializers import ProductSerializer, CategorySerializer
-from addwords.models import Product, Category
-
+from products.models import Product, Category
 
 class ProductViewSet(viewsets.ModelViewSet):
     """ Он будет обрабатывать GET и POST для Heroe без дополнительной работы. """

@@ -53,8 +53,8 @@ STATIC_ROOT = 'static/'
 LOGIN_URL = 'login'
 
 # Пользователи будут перенаправлены на главную страницу после входа в систему и выхода из нее 
-LOGIN_REDIRECT_URL = 'main'
-LOGOUT_REDIRECT_URL = 'main'
+LOGIN_REDIRECT_URL = 'catalog:catalog'
+LOGOUT_REDIRECT_URL = 'catalog:catalog'
 ###################################################################################
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -63,7 +63,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'addwords.apps.AddwordsConfig',
+    'catalog',
+    'orders',
+    'products',
     'users.apps.UsersConfig', # можно просто users
     'debug_toolbar',
     'rest_framework',

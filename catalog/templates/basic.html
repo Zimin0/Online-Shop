@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <title>{% block title %}Главная{% endblock %}- Магазин</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'catalog/style.css' %}">
+    </head>
+    <body>
+        <header>
+            <h1>{% block page_title %}{% endblock %}</h1>
+            <hr>
+        </header>
+        <nav>
+            <a href="{% url 'catalog:catalog' %}"><li>Главная</li></a>
+            <a href="{% url 'products:new' %}"><li>Добавить товар</li></a>
+            <a href="/admin/"><li>Админ панель</li></a>
+            <a href="{% url 'catalog:info' %}"><li>Функции для авторизованных пользователей</li></a> 
+            <a href="{% url 'users:home' %}"><li>Личный кабинет</li></a>
+            <hr>
+            
+            <p1>Здравствуйте, </p1>
+            <a href="{% url 'users:home' %}"><b>{{ user.username|default:'Guest' }}</b></a>
+            <hr>
+            {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}"><li>Выйти</li></a>
+            {% else %}
+                <a href="{% url 'login' %}"><li>Войти</li></a>
+                <a href="{% url 'users:signup' %}"><li>Регистрация</li></a>
+            {% endif %}
+        </nav>
+        <section>
+            {% block content %}
+            {% endblock %}
+        </section>
+    </body>
+</html>

@@ -19,11 +19,11 @@
     <h2>Ваши товары:</h2>
     <hr>
     {% for product in user_products %}
-        <h3> <a href="{% url 'ex_product' product.pk %}">{{ product }}</a> </h3>
+        <h3> <a href="{% url 'products:ex_product' product.pk %}">{{ product }}</a> </h3>
         <hr>
     {% endfor %}
 
-    <button><a href="{% url 'new_order' %}">Создать новый заказ</a></button> 
+    <button><a href="{% url 'orders:new_order' %}">Создать новый заказ</a></button> 
     <hr>
     <h2>Предложения о продаже:</h2>
 
@@ -35,17 +35,25 @@
                 <a href="">{{ prod }},</a>
             {% endfor %}
             </h3>
-        <h3>STATUS: {{  ord.status }}</h3>
+        <h3>STATUS: {{  ord.get_readable_status }}</h3>
         <h3><a href="/">[link]</a></h3>
 
-        <form action="{% url 'home' %}" method="post"> 
+        {% if user == ord.from_user %}   
+            <form action="{% url 'users:home' %}" method="post"> 
+                {% csrf_token %}
+                <button type="submit" name="status" value="{{ ord.pk }}.0">Отменить</button>
+            </form>
+        {% else %}
+            <form action="{% url 'users:home' %}" method="post"> 
                 {% csrf_token %}
                 <button type="submit" name="status" value="{{ ord.pk }}.1">Подтвердить</button>
                 <button type="submit" name="status" value="{{ ord.pk }}.0">Отказать</button>
-        </form>
+            </form>
+        {% endif %} 
+
         <hr>
     {% endfor %}
 {% else %}
-<p3>Мы не знаем, кто Вы...<br> <a href="{% url 'login' %}">Войдите</a> в свой аккаунт или <a href="{% url 'signup' %}">зарегестрируйтесь</a>!</p3>
+<p3>Мы не знаем, кто Вы...<br> <a href="{% url 'login' %}">Войдите</a> в свой аккаунт или <a href="{% url 'users:signup' %}">зарегестрируйтесь</a>!</p3>
 {% endif %}
 {% endblock %}
