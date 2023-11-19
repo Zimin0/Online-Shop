@@ -4,9 +4,9 @@ from products.models import Product, Category
 from django.db.models import Q, Count
 from products.forms import ProductForm
 
-def ex_product(request, word_id):
+def ex_product(request, product_id):
 	""" Страница конкретного товара. """
-	product = get_object_or_404(Product.objects.select_related('category'), pk=word_id)
+	product = get_object_or_404(Product.objects.select_related('category'), pk=product_id)
 	context = {'product': product}
 	return render(request, 'products/exactProduct.html', context)
 

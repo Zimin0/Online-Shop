@@ -37,7 +37,7 @@ def users_list(request):
 	users = User.objects.all()
 	# for i in User.objects.annotate(Count())
 	context['users'] = users
-	return render(request, "users/users.html", context)
+	return render(request, "registration/users.html", context)
 
 class SignUp(CreateView):
     form_class = UserCreationForm
